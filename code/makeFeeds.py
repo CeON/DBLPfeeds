@@ -25,6 +25,7 @@
 
 import datetime
 import getopt
+import pickle
 import re
 import sys
 import xml.sax
@@ -149,7 +150,7 @@ def collect(collected):
          collected[venue] = []
       collected[venue].append(record)
 
-def store(collected, outDir):
+def store(collected, names, outDir):
    """Store records in files."""
 
    DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S +0000'
@@ -157,20 +158,23 @@ def store(collected, outDir):
    now = datetime.datetime.utcnow()
    nowStr = now.strftime(DATETIME_FORMAT)
 
-   for venue in collected:
-      fileName = re.sub('[^a-zA-Z0-9_/-]', '', venue)
+   for key in collected:
+      fileName = re.sub('[^a-zA-Z0-9_/-]', '', key)
       handle = open(outDir + '/' + fileName + '.xml', 'w')
+      venue = names.get(key, key).encode('utf-8')
+      kind = ['conference', 'journal'][key.startswith('journals')]
       handle.write('<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n<channel>\n')
       handle.write('  <title>%s</title>\n' % venue)
-      handle.write('  <description>%s</description>\n' % 'TODO')
-      handle.write('  <link>http://dblp.uni-trier.de/db/%s/index.html</link>\n' % venue)
+      handle.write('  <description>%s</description>\n' % 'Feed for DBLP-indexed %s %s' % (kind, venue))
+      handle.write('  <link>http://dblp.uni-trier.de/db/%s/index.html</link>\n' % key)
       handle.write('  <lastBuildDate>%s</lastBuildDate>\n\n' % nowStr)
 
-      for record in collected[venue]:
+      for record in collected[key]:
          modDate = datetime.datetime.strptime(record['mdate'], "%Y-%m-%d")
+         authors = ', '.join(record['author']).encode('utf-8')
          handle.write('  <item>\n    <title>%s</title>\n' % record['title'].encode('utf-8'))
-         handle.write('    <description>%s</description>\n' % 'TODO')
-         handle.write('    <author>%s</author>\n' % ', '.join(record['author']).encode('utf-8'))
+         handle.write('    <description>Article in/at %s by %s</description>\n' % (venue, authors))
+         handle.write('    <author>%s</author>\n' % authors)
          handle.write('    <link>%s</link>\n' % record['ee'].encode('utf-8'))
          handle.write('    <guid>%s</guid>\n' % record['ee'].encode('utf-8'))
          handle.write('    <pubDate>%s</pubDate>\n' % modDate.strftime(DATETIME_FORMAT))
@@ -183,9 +187,13 @@ if __name__ == "__main__":
    def usage():
       print 'Usage: %s <outDir>' % sys.argv[0]
 
-   if len(sys.argv) < 2:
+   if len(sys.argv) < 3:
       usage()
       sys.exit(1)
+
+   index = open(sys.argv[2], 'r')
+   names = pickle.load(index)
+   index.close()
 
    fromDate = datetime.datetime.now() - datetime.timedelta(400)
 
@@ -199,6 +207,6 @@ if __name__ == "__main__":
 
    parse_xml(chain, sys.stdin)
 
-   store(collected, sys.argv[1])
+   store(collected, names, sys.argv[1])
 
 # vim:et:sw=3:ts=3

@@ -1,4 +1,4 @@
-dblpfeeds
+DBLPfeeds
 =========
 
-RSS feeds of journals and conferences indexed by DBLP
+RSS feeds of journals and conferences indexed by DBLP.

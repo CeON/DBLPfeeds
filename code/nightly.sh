@@ -23,10 +23,14 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-TODAY=`date +%Y%m%d`
-DUMP=tmp/dblp-$TODAY.xml.gz
-WWW=www
+BASE=..
+CODE=$BASE/code
+TMP=$BASE/tmp
+WWW=$BASE/www
 
-rm -f tmp/dblp-*.xml.gz
+TODAY=`date +%Y%m%d`
+DUMP=$TMP/dblp-$TODAY.xml.gz
+
+rm -f $TMP/dblp-*.xml.gz
 wget http://dblp.uni-trier.de/xml/dblp.xml.gz -O $DUMP
-zcat $DUMP | python generateFeeds.py $WWW
+zcat $DUMP | python $CODE/makeFeeds.py $WWW $TMP/index.pickle

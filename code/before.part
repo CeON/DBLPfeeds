@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="default.css" type="text/css"/>
+  <meta charset="utf-8"/>
+  <title>DBLP feeds</title>
+</head>
+<body>
+
+<p>RSS feeds of conferences and journals indexed by <a href="http://dblp.uni-trier.de/">DBLP</a>.
+Written and maintained by Łukasz Bolikowski
+(<a href="mailto:l.bolikowski@icm.edu.pl">l.bolikowski@icm.edu.pl</a>,
+<a href="https://twitter.com/bolikowski">@bolikowski</a>).
+Source code <a href="https://github.com/CeON/DBLPfeeds">available on GitHub</a>.
+</p>
+
