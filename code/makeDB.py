@@ -24,11 +24,13 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import datetime
-import getopt
-import pickle
+import gzip
 import re
+import sqlite3
 import sys
 import xml.sax
+
+KINDS = ['conf', 'journals']
 
 class EventHandler(xml.sax.handler.ContentHandler):
    """SAX content handler using coroutines.
@@ -87,9 +89,9 @@ def to_records(target):
                continue
             if field and event == 'end' and args in SECONDARY:
                if args in MULTIPLE:
-                  record[field] = record.get(field, []) + [text]
+                  record[field] = record.get(field, []) + [text.strip()]
                else:
-                  record[field] = text
+                  record[field] = text.strip()
                field, text = None, ''
                continue
             if event == 'end' and args in PRIMARY:
@@ -127,86 +129,80 @@ def filter_by_date(fromDate, target):
 def filter_by_venue(target):
    """Picks documents that were published at the given venues."""
 
-   TYPES = ['conf', 'journals']
-
    while True:
       record = (yield)
       match = re.match('db/([^/]*)/([^/]*)/.*', record['url'])
       if not match:
          continue
-      if not str(match.group(1)) in TYPES:
+      if not str(match.group(1)) in KINDS:
          continue
       record['venue'] = str(match.group(1)) + '/' + str(match.group(2))
       target.send(record)
 
 @coroutine
-def collect(collected):
-   """Groups records by venues."""
+def store(conn):
+   """Store records in database."""
 
    while True:
       record = (yield)
-      venue = record['venue']
-      if venue not in collected:
-         collected[venue] = []
-      collected[venue].append(record)
 
-def store(collected, names, outDir):
-   """Store records in files."""
+      authors = ', '.join(record['author'])
 
-   DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S +0000'
+      conn.execute('INSERT INTO record VALUES (?, ?, ?, ?, ?)',
+         (record['title'], authors, record['mdate'], record['ee'], record['venue']))
 
-   now = datetime.datetime.utcnow()
-   nowStr = now.strftime(DATETIME_FORMAT)
+def parse_records(conn, fileName):
+   fromDate = datetime.datetime.now() - datetime.timedelta(1000)
 
-   for key in collected:
-      fileName = re.sub('[^a-zA-Z0-9_/-]', '', key)
-      handle = open(outDir + '/' + fileName + '.xml', 'w')
-      venue = names.get(key, key).encode('utf-8')
-      kind = ['conference', 'journal'][key.startswith('journals')]
-      handle.write('<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n<channel>\n')
-      handle.write('  <title>%s</title>\n' % venue)
-      handle.write('  <description>%s</description>\n' % 'Feed for DBLP-indexed %s %s' % (kind, venue))
-      handle.write('  <link>http://dblp.uni-trier.de/db/%s/index.html</link>\n' % key)
-      handle.write('  <lastBuildDate>%s</lastBuildDate>\n\n' % nowStr)
-
-      for record in collected[key]:
-         modDate = datetime.datetime.strptime(record['mdate'], "%Y-%m-%d")
-         authors = ', '.join(record['author']).encode('utf-8')
-         handle.write('  <item>\n    <title>%s</title>\n' % record['title'].encode('utf-8'))
-         handle.write('    <description>Article in/at %s by %s</description>\n' % (venue, authors))
-         handle.write('    <author>%s</author>\n' % authors)
-         handle.write('    <link>%s</link>\n' % record['ee'].encode('utf-8'))
-         handle.write('    <guid>%s</guid>\n' % record['ee'].encode('utf-8'))
-         handle.write('    <pubDate>%s</pubDate>\n' % modDate.strftime(DATETIME_FORMAT))
-         handle.write('  </item>\n\n')
-
-      handle.write('</channel>\n</rss>\n')
-      handle.close()
-
-if __name__ == "__main__":
-   def usage():
-      print 'Usage: %s <outDir>' % sys.argv[0]
-
-   if len(sys.argv) < 3:
-      usage()
-      sys.exit(1)
-
-   index = open(sys.argv[2], 'r')
-   names = pickle.load(index)
-   index.close()
-
-   fromDate = datetime.datetime.now() - datetime.timedelta(400)
-
-   collected = {}
-
-   chain = collect(collected)
+   chain = store(conn)
    chain = filter_by_venue(chain)
    chain = filter_by_date(fromDate, chain)
    chain = filter_incomplete(chain)
    chain = to_records(chain)
 
-   parse_xml(chain, sys.stdin)
+   handle = gzip.open(fileName, 'r')
+   parse_xml(chain, handle)
+   handle.close()
 
-   store(collected, names, sys.argv[1])
+def parse_venues(conn, fileName):
+   handle = open(fileName, 'r')
+
+   for line in handle:
+      match = re.match('<bht key="/db/(.*)/(.*)/index.bht" title="(.*)">', line.strip())
+      if not match:
+         continue
+      kind = match.group(1)
+      if kind not in KINDS:
+         continue
+      acronym = match.group(2)
+      name = match.group(3)
+      try:
+         conn.execute('INSERT INTO venue VALUES (?, ?, ?, ?)',
+            (kind + '/' + acronym, kind, acronym, name))
+      except sqlite3.IntegrityError:
+         pass
+
+   handle.close()
+
+def create_tables(conn):
+   conn.execute('CREATE TABLE venue (key TEXT PRIMARY KEY, kind TEXT, acronym TEXT, name TEXT)')
+   conn.execute('CREATE TABLE record (title TEXT, authors TEXT, date TEXT, link TEXT, venue TEXT)')
+   conn.execute('CREATE INDEX byvenue ON record (venue)')
+
+if __name__ == "__main__":
+   def usage():
+      print 'Usage: %s <dblp_bht.xml> <dblp.xml.gz> <index.sqlite>' % sys.argv[0]
+
+   if len(sys.argv) < 4:
+      usage()
+      sys.exit(1)
+
+   conn = sqlite3.connect(sys.argv[3])
+   create_tables(conn)
+   parse_venues(conn, sys.argv[1])
+   conn.commit()
+   parse_records(conn, sys.argv[2])
+   conn.commit()
+   conn.close()
 
 # vim:et:sw=3:ts=3
