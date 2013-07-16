@@ -28,10 +28,7 @@ CODE=$BASE/code
 TMP=$BASE/tmp
 WWW=$BASE/www
 
-TODAY=`date +%Y%m%d`
-BHT=$TMP/dblp_bht-$TODAY.xml
+BHT=$TMP/dblp_bht.xml
 
 rm -f $TMP/dblp_bht-*.xml
 wget http://dblp.uni-trier.de/xml/dblp_bht.xml -O $BHT
-cat $BHT | python $CODE/makeIndex.py $TMP/index.pickle $TMP/index.part
-cat $CODE/before.part $TMP/index.part $CODE/after.part > $WWW/index.html

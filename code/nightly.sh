@@ -28,9 +28,20 @@ CODE=$BASE/code
 TMP=$BASE/tmp
 WWW=$BASE/www
 
-TODAY=`date +%Y%m%d`
-DUMP=$TMP/dblp-$TODAY.xml.gz
+BHT=$TMP/dblp_bht.xml
+DB=$TMP/dblp.sqlite
+DUMP=$TMP/dblp.xml.gz
+JSON=$TMP/index.json
+HTML=$TMP/index.html.part
 
-rm -f $TMP/dblp-*.xml.gz
-wget http://dblp.uni-trier.de/xml/dblp.xml.gz -O $DUMP
-zcat $DUMP | python $CODE/makeFeeds.py $WWW $TMP/index.pickle
+# rm -f $TMP/dblp-*.xml.gz
+# wget http://dblp.uni-trier.de/xml/dblp.xml.gz -O $DUMP
+rm -f $DB
+python $CODE/makeDB.py $BHT $DUMP $DB
+rm -rf $TMP/{conf,journals} $JSON $HTML
+mkdir -p $TMP/{conf,journals}
+python $CODE/makeFiles.py $DB $TMP $HTML $JSON
+cp -r $TMP/{conf,journals} $WWW/
+cp $JSON $WWW/
+cat $CODE/index.html.template | sed -e "/#########/r $HTML" > $WWW/index.html
+
