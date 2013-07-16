@@ -34,8 +34,8 @@ DUMP=$TMP/dblp.xml.gz
 JSON=$TMP/index.json
 HTML=$TMP/index.html.part
 
-# rm -f $TMP/dblp-*.xml.gz
-# wget http://dblp.uni-trier.de/xml/dblp.xml.gz -O $DUMP
+rm -f $TMP/dblp-*.xml.gz
+wget http://dblp.uni-trier.de/xml/dblp.xml.gz -O $DUMP
 rm -f $DB
 python $CODE/makeDB.py $BHT $DUMP $DB
 rm -rf $TMP/{conf,journals} $JSON $HTML
