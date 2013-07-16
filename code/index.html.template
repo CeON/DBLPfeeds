@@ -7,15 +7,47 @@
 </head>
 <body>
 
+
+<h1>DBLP feeds</h1>
 <p>
-RSS feeds of conferences and journals indexed by <a href="http://dblp.uni-trier.de/">DBLP</a>.
-Written and maintained by Łukasz Bolikowski
+Want to be informed about the <strong>latest papers from your favourite computer science journal or conference</strong>?  Now you can!
+Below you will find RSS feeds of <a href="http://dblp.uni-trier.de/">DBLP</a>-indexed journals and conferences.
+</p>
+
+<p>This tiny service is written and maintained by Łukasz Bolikowski
 (<a href="mailto:l.bolikowski@icm.edu.pl">l.bolikowski@icm.edu.pl</a>,
 <a href="https://twitter.com/bolikowski">@bolikowski</a>).
-Source code <a href="https://github.com/CeON/DBLPfeeds">available on GitHub</a>.
+Feeds are updated nightly.
+Source code (BSD 2-clause license) available <a href="https://github.com/CeON/DBLPfeeds">on GitHub</a>.
+I'm <strong>eager to hear your feedback</strong>, and please help spread the word:
 </p>
+
+<p>
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-text="I follow papers at DBLP-indexed comp. sci. conferences and journals thanks to RSS feeds at http://services.ceon.pl/dblpfeeds/" data-via="bolikowski" data-count="none" data-hashtags="dblpfeeds">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+&nbsp;
+
+<script src="//platform.linkedin.com/in.js" type="text/javascript">
+ lang: en_US
+</script>
+<script type="IN/Share" data-url="http://services.ceon.pl/dblpfeeds/" data-counter="right"></script>
+
+</p>
+
+<p>Click on a journal or a conference below to subscribe to its RSS feed.
+Hint: use the find function of your browser (usually Ctrl-F or &#8984;-F) to find the name you're looking for.</p>
 
 <!-- ######### -->
 
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-41818081-2', 'ceon.pl');
+  ga('send', 'pageview');
+</script>
 </body>
 </html>

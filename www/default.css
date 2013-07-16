@@ -1,0 +1,47 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  max-width: 900px;
+  width: 900px !important;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: justify;
+}
+
+a {
+  color: #086;
+  text-decoration: none;
+}
+
+.entry:before {
+  content: url('rss-small.png');
+}
+
+.entry a {
+  color: #111;
+  text-decoration: none;
+  padding-left: 4px;
+}
+
+.entry a:hover {
+  color: #086;
+}
+
+.entry {
+  padding: 2px 0px;
+}
+
+.count:before {
+  content: "(";
+}
+
+.count:after {
+  content: ")";
+}
+
+.count {
+  font-size: 9pt;
+  color: #777;
+}
+
