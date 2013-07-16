@@ -171,11 +171,11 @@ def parse_venues(conn, fileName):
       match = re.match('<bht key="/db/(.*)/(.*)/index.bht" title="(.*)">', line.strip())
       if not match:
          continue
-      kind = match.group(1)
+      kind = match.group(1).strip()
       if kind not in KINDS:
          continue
-      acronym = match.group(2)
-      name = match.group(3)
+      acronym = match.group(2).strip()
+      name = match.group(3).strip()
       try:
          conn.execute('INSERT INTO venue VALUES (?, ?, ?, ?)',
             (kind + '/' + acronym, kind, acronym, name))
