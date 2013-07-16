@@ -38,10 +38,10 @@ rm -f $TMP/dblp-*.xml.gz
 wget http://dblp.uni-trier.de/xml/dblp.xml.gz -O $DUMP
 rm -f $DB
 python $CODE/makeDB.py $BHT $DUMP $DB
-rm -rf $TMP/{conf,journals} $JSON $HTML
-mkdir -p $TMP/{conf,journals}
+rm -rf $TMP/conf $TMP/journals $JSON $HTML
+mkdir -p $TMP/conf $TMP/journals
 python $CODE/makeFiles.py $DB $TMP $HTML $JSON
-cp -r $TMP/{conf,journals} $WWW/
+cp -r $TMP/conf $TMP/journals $WWW/
 cp $JSON $WWW/
 cat $CODE/index.html.template | sed -e "/#########/r $HTML" > $WWW/index.html
 
