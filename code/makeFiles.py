@@ -31,13 +31,14 @@ import sqlite3
 import sys
 
 CUTOFF_DAYS = 1000
+LIMIT = 200
 
 def calc_toc(conn):
    fromDate = (datetime.datetime.now() - datetime.timedelta(CUTOFF_DAYS)).strftime('%Y-%m-%d')
    return [rec for rec in conn.execute('SELECT v.key, v.kind, v.acronym, v.name, COUNT(*) FROM venue AS v LEFT JOIN record AS r ON r.venue = v.key GROUP BY v.key HAVING r.date >= ? ORDER BY v.kind, v.name', (fromDate,))]
 
 def update_feeds(toc, conn, feedsDirName):
-   DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S +0000'
+   DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
 
    now = datetime.datetime.utcnow().strftime(DATETIME_FORMAT)
    fromDate = (datetime.datetime.now() - datetime.timedelta(CUTOFF_DAYS)).strftime('%Y-%m-%d')
@@ -57,11 +58,13 @@ def update_feeds(toc, conn, feedsDirName):
       handle.write('  <lastBuildDate>%s</lastBuildDate>\n\n' % now)
 
       for title, authors, date, link, _ \
-         in conn.execute('SELECT * FROM record WHERE venue = ? ORDER BY date DESC', (key,)):
+         in conn.execute('SELECT * FROM record WHERE venue = ? ORDER BY date DESC LIMIT ?', (key, LIMIT)):
 
          title = cgi.escape(title.encode('utf-8'))
          authors = cgi.escape(authors.encode('utf-8'))
          link = cgi.escape(link.encode('utf-8'))
+
+         formattedDate = datetime.datetime.strptime(date, '%Y-%m-%d').strftime(DATETIME_FORMAT)
 
          inat = ['presented at', 'published in'][kind == 'journals']
          handle.write('  <item>\n    <title>%s</title>\n' % title)
@@ -69,7 +72,7 @@ def update_feeds(toc, conn, feedsDirName):
          handle.write('    <author>%s</author>\n' % authors)
          handle.write('    <link>%s</link>\n' % link)
          handle.write('    <guid>%s</guid>\n' % link)
-         handle.write('    <pubDate>%s</pubDate>\n' % date)
+         handle.write('    <pubDate>%s</pubDate>\n' % formattedDate)
          handle.write('  </item>\n\n')
 
       handle.write('</channel>\n</rss>\n')
@@ -79,7 +82,7 @@ def update_index(toc, htmlFileName):
    handle = open(htmlFileName, 'w')
    for key, kind, acronym, name, count in toc:
       sanitizedKey = re.sub('[^a-zA-Z0-9_/-]', '', key)
-      handle.write('<div class="entry"><a href="%s.xml">%s</a> <span class="count">%d</span></div>\n' % (sanitizedKey, name.encode('utf-8'), count))
+      handle.write('<div class="entry"><a href="%s.xml">%s</a> <span class="count">%d</span></div>\n' % (sanitizedKey, name.encode('utf-8'), min(count, LIMIT)))
    handle.close()
 
 def update_json(toc, jsonFileName):
