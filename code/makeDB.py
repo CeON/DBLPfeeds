@@ -71,7 +71,7 @@ def to_records(target):
    """Converts SAX event to records describing documents."""
 
    PRIMARY = ['article', 'inproceedings']
-   SECONDARY = ['author', 'ee', 'title', 'url']
+   SECONDARY = ['author', 'ee', 'title', 'url', 'year']
    MULTIPLE = ['author']
 
    while True:
@@ -148,8 +148,8 @@ def store(conn):
 
       authors = ', '.join(record['author'])
 
-      conn.execute('INSERT INTO record VALUES (?, ?, ?, ?, ?)',
-         (record['title'], authors, record['mdate'], record['ee'], record['venue']))
+      conn.execute('INSERT INTO record VALUES (?, ?, ?, ?, ?, ?)',
+         (record['title'], authors, record['mdate'], record['ee'], record['venue'], record['year']))
 
 def parse_records(conn, fileName):
    fromDate = datetime.datetime.now() - datetime.timedelta(1000)
@@ -186,7 +186,7 @@ def parse_venues(conn, fileName):
 
 def create_tables(conn):
    conn.execute('CREATE TABLE venue (key TEXT PRIMARY KEY, kind TEXT, acronym TEXT, name TEXT)')
-   conn.execute('CREATE TABLE record (title TEXT, authors TEXT, date TEXT, link TEXT, venue TEXT)')
+   conn.execute('CREATE TABLE record (title TEXT, authors TEXT, date TEXT, link TEXT, venue TEXT, year TEXT)')
    conn.execute('CREATE INDEX byvenue ON record (venue)')
 
 if __name__ == "__main__":

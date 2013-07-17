@@ -35,7 +35,8 @@ LIMIT = 200
 
 def calc_toc(conn):
    fromDate = (datetime.datetime.now() - datetime.timedelta(CUTOFF_DAYS)).strftime('%Y-%m-%d')
-   return [rec for rec in conn.execute('SELECT v.key, v.kind, v.acronym, v.name, COUNT(*) FROM venue AS v LEFT JOIN record AS r ON r.venue = v.key GROUP BY v.key HAVING r.date >= ? ORDER BY v.kind, v.name', (fromDate,))]
+   fromYear = fromDate[0:4]
+   return [rec for rec in conn.execute('SELECT v.key, v.kind, v.acronym, v.name, COUNT(*) FROM venue AS v JOIN record AS r ON r.venue = v.key WHERE r.date >= ? AND r.year >= ? GROUP BY v.key ORDER BY v.kind, v.name', (fromDate, fromYear))]
 
 def update_feeds(toc, conn, feedsDirName):
    DATETIME_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
@@ -57,7 +58,7 @@ def update_feeds(toc, conn, feedsDirName):
       handle.write('  <link>http://dblp.uni-trier.de/db/%s/index.html</link>\n' % key)
       handle.write('  <lastBuildDate>%s</lastBuildDate>\n\n' % now)
 
-      for title, authors, date, link, _ \
+      for title, authors, date, link, _, _ \
          in conn.execute('SELECT * FROM record WHERE venue = ? ORDER BY date DESC LIMIT ?', (key, LIMIT)):
 
          title = cgi.escape(title.encode('utf-8'))
@@ -80,9 +81,15 @@ def update_feeds(toc, conn, feedsDirName):
 
 def update_index(toc, htmlFileName):
    handle = open(htmlFileName, 'w')
-   for key, kind, acronym, name, count in toc:
-      sanitizedKey = re.sub('[^a-zA-Z0-9_/-]', '', key)
-      handle.write('<div class="entry"><a href="%s.xml">%s</a> <span class="count">%d</span></div>\n' % (sanitizedKey, name.encode('utf-8'), min(count, LIMIT)))
+   headings = {'conf': 'Conferences', 'journals': 'Journals'}
+   for turn in ['conf', 'journals']:
+      handle.write('<div class="%s">\n<h2>%s</h2>\n' % (turn, headings[turn]))
+      for key, kind, acronym, name, count in toc:
+         if kind <> turn:
+            continue
+         sanitizedKey = re.sub('[^a-zA-Z0-9_/-]', '', key)
+         handle.write('<div class="entry"><a href="%s.xml">%s</a> <span class="count">%d</span></div>\n' % (sanitizedKey, name.encode('utf-8'), min(count, LIMIT)))
+      handle.write('</div>\n')
    handle.close()
 
 def update_json(toc, jsonFileName):

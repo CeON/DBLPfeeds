@@ -22,7 +22,7 @@ I'm <strong>eager to hear your feedback</strong>, and please help spread the wor
 </p>
 
 <p>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://services.ceon.pl/dblpfeeds/" data-text="I follow papers at DBLP-indexed comp. sci. conferences and journals thanks to RSS feeds at" data-via="bolikowski" data-size="large" data-count="none" data-hashtags="dblpfeeds">Tweet</a>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://services.ceon.pl/dblpfeeds/" data-text="I follow the lastest papers from DBLP-indexed comp. sci. conferences and journals thanks to RSS feeds at" data-size="large" data-count="none" data-hashtags="dblpfeeds">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 </p>
 

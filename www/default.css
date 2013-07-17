@@ -2,11 +2,27 @@
 
 body {
   font-family: 'Open Sans', sans-serif;
-  max-width: 900px;
-  width: 900px !important;
+  max-width: 960px;
+  width: 960px !important;
   margin-right: auto;
   margin-left: auto;
   text-align: justify;
+}
+
+.conf {
+  float: left;
+  width: 465px;
+  background: #fbfbfb;
+  font-size: x-small;
+  padding: 5px;
+}
+
+.journals {
+  float: right;
+  width: 465px;
+  background: #fbfbfb;
+  font-size: x-small;
+  padding: 5px;
 }
 
 a {
@@ -41,7 +57,7 @@ a {
 }
 
 .count {
-  font-size: 9pt;
+  font-size: xx-small;
   color: #777;
 }
 
