@@ -43,6 +43,7 @@ def update_feeds(toc, conn, feedsDirName):
 
    now = datetime.datetime.utcnow().strftime(DATETIME_FORMAT)
    fromDate = (datetime.datetime.now() - datetime.timedelta(CUTOFF_DAYS)).strftime('%Y-%m-%d')
+   fromYear = fromDate[0:4]
 
    for key, kind, acronym, name, _ in toc:
       # print 'Building feed for %s' % key
@@ -58,8 +59,8 @@ def update_feeds(toc, conn, feedsDirName):
       handle.write('  <link>http://dblp.uni-trier.de/db/%s/index.html</link>\n' % key)
       handle.write('  <lastBuildDate>%s</lastBuildDate>\n\n' % now)
 
-      for title, authors, date, link, _, _ \
-         in conn.execute('SELECT * FROM record WHERE venue = ? ORDER BY date DESC LIMIT ?', (key, LIMIT)):
+      for title, authors, date, link, _, year \
+         in conn.execute('SELECT * FROM record WHERE venue = ? AND year >= ? ORDER BY date DESC LIMIT ?', (key, fromYear, LIMIT)):
 
          title = cgi.escape(title.encode('utf-8'))
          authors = cgi.escape(authors.encode('utf-8'))
@@ -69,7 +70,7 @@ def update_feeds(toc, conn, feedsDirName):
 
          inat = ['presented at', 'published in'][kind == 'journals']
          handle.write('  <item>\n    <title>%s</title>\n' % title)
-         handle.write('    <description>Article %s %s by %s</description>\n' % (inat, name, authors))
+         handle.write('    <description>Article %s %s in %d by %s</description>\n' % (inat, name, int(year), authors))
          handle.write('    <author>%s</author>\n' % authors)
          handle.write('    <link>%s</link>\n' % link)
          handle.write('    <guid>%s</guid>\n' % link)
