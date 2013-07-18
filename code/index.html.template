@@ -4,6 +4,11 @@
   <link rel="stylesheet" href="default.css" type="text/css"/>
   <meta charset="utf-8"/>
   <title>DBLP feeds</title>
+  <meta property="og:title" content="DBLP feeds"/>
+  <meta property="og:url" content="http://services.ceon.pl/dblpfeeds/"/>
+  <meta property="og:image" content="http://services.ceon.pl/dblpfeeds/rss.png"/>
+  <meta property="og:description" content="RSS feeds with latest papers from computer science conferences and journals"/>
+  <meta name="description" content="RSS feeds with latest papers from computer science conferences and journals">
 </head>
 <body>
 
@@ -11,6 +16,7 @@
 <p>
 Want to be informed about the <strong>latest papers from your favourite computer science conference or journal</strong>?  Now you can!
 Below you will find RSS feeds of <a href="http://dblp.uni-trier.de/">DBLP</a>-indexed conferences and journals.
+Caveat emptor: due to technical limitations, you will occasionally see false positives (not-so-recent papers) in the feed.
 </p>
 
 <p>This tiny service is written and maintained by Łukasz Bolikowski
@@ -21,10 +27,44 @@ Source code (BSD 2-clause license) available <a href="https://github.com/CeON/DB
 I'm <strong>eager to hear your feedback</strong>, and please help spread the word:
 </p>
 
-<p>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://services.ceon.pl/dblpfeeds/" data-text="I follow the lastest papers from DBLP-indexed comp. sci. conferences and journals thanks to RSS feeds at" data-size="large" data-count="none" data-hashtags="dblpfeeds">Tweet</a>
+<div class="socialbutton">
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://services.ceon.pl/dblpfeeds/" data-text="I follow the lastest papers from DBLP-indexed comp. sci. conferences and journals thanks to RSS feeds at" data-hashtags="dblpfeeds">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-</p>
+</div>
+
+<div class="socialbutton">
+<script src="//platform.linkedin.com/in.js" type="text/javascript">
+ lang: en_US
+</script>
+<script type="IN/Share" data-url="http://services.ceon.pl/dblpfeeds/" data-counter="right"></script>
+</div>
+
+<div class="socialbutton">
+<!-- Place this tag where you want the share button to render. -->
+<div class="g-plus" data-action="share" data-annotation="bubble" data-href="http://services.ceon.pl/dblpfeeds/"></div>
+<!-- Place this tag after the last share tag. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+</div>
+
+<div class="socialbutton">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-href="http://services.ceon.pl/dblpfeeds/" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+</div>
+
+<p class="clear"/>
 
 <p>Click on a conference or a journal below to subscribe to its RSS feed.
 Hint: use the find function of your browser (usually Ctrl-F or &#8984;-F) to locate the name you're looking for.</p>

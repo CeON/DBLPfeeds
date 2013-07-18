@@ -9,6 +9,16 @@ body {
   text-align: justify;
 }
 
+.socialbutton {
+  float: left;
+  width: 100px;
+}
+
+.clear {
+  padding: 1px 0px;
+  clear: both;
+}
+
 .conf {
   float: left;
   width: 465px;
