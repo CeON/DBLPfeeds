@@ -16,7 +16,7 @@
 <p>
 Want to be informed about the <strong>latest papers from your favourite computer science conference or journal</strong>?  Now you can!
 Below you will find RSS feeds of <a href="http://dblp.uni-trier.de/">DBLP</a>-indexed conferences and journals.
-Caveat emptor: due to technical limitations, you will occasionally see false positives (not-so-recent papers) in the feed.
+Caveat emptor: due to technical limitations, you will occasionally see false positives (i.e. not-so-recent papers) in the feeds.
 </p>
 
 <p>This tiny service is written and maintained by Łukasz Bolikowski
