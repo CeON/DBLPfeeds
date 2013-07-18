@@ -68,9 +68,8 @@ def update_feeds(toc, conn, feedsDirName):
 
          formattedDate = datetime.datetime.strptime(date, '%Y-%m-%d').strftime(DATETIME_FORMAT)
 
-         inat = ['presented at', 'published in'][kind == 'journals']
          handle.write('  <item>\n    <title>%s</title>\n' % title)
-         handle.write('    <description>Article %s %s in %d by %s</description>\n' % (inat, name, int(year), authors))
+         handle.write('    <description>Published in %d. Authors: %s</description>\n' % (int(year), authors))
          handle.write('    <author>%s</author>\n' % authors)
          handle.write('    <link>%s</link>\n' % link)
          handle.write('    <guid>%s</guid>\n' % link)
