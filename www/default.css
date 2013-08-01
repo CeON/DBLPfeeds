@@ -1,12 +1,19 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
+@import url(http://fonts.googleapis.com/css?family=Bree+Serif);
 
 body {
   font-family: 'Open Sans', sans-serif;
-  max-width: 960px;
-  width: 960px !important;
-  margin-right: auto;
-  margin-left: auto;
-  text-align: justify;
+}
+
+.container {
+	max-width: 960px;
+	width: 960px !important;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.content p {
+	text-align: justify;
 }
 
 .socialbutton {
@@ -71,3 +78,65 @@ a {
   color: #777;
 }
 
+.footerContainer {
+	background: #111;
+	text-shadow:0 1px 0 #000;
+	font-size: 11px;
+	margin: 0;
+	padding: 0;
+	border-top: 1px solid #fff;
+}
+
+.footer {
+	margin: 0 auto;
+	padding: 30px 0;
+	width: 960px;
+}
+
+.footerCol {
+	float: left;
+	width: 300px;
+}
+
+.footerCol h3 {
+	text-transform: uppercase;
+	font-size: 16px;
+	line-height: 16px;
+	margin: 0 0 25px 0;
+	color: white;
+	font-family: 'Bree Serif';
+}
+
+.footerCol ul {
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	line-height: 24px;
+}
+
+.footerCol ul li {
+	list-style: none;
+}
+
+.footerCol ul li.long {
+	line-height: 16px;
+}
+
+.footerCol ul li a {
+	color: #666;
+	text-decoration: none;
+}
+
+.footerCol ul li a:hover {
+	color: #097;
+	text-decoration: none;
+}
+
+.clear {
+	clear: both;
+	padding: 10px 0;
+}
+
+h2 {
+	text-align: center;
+}
