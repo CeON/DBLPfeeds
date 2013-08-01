@@ -19,19 +19,23 @@
 <p>
 Want to be informed about the <strong>latest papers from your favourite computer science conference or journal</strong>?  Now you can!
 Below you will find RSS feeds of <a href="http://dblp.uni-trier.de/">DBLP</a>-indexed conferences and journals.
-Caveat emptor: due to technical limitations, you will occasionally see false positives (i.e. not-so-recent papers) in the feeds.
 </p>
 
 <p>This tiny service is written and maintained by Łukasz Bolikowski
 (<a href="mailto:l.bolikowski@icm.edu.pl">l.bolikowski@icm.edu.pl</a>,
 <a href="https://twitter.com/bolikowski">@bolikowski</a>).
-Feeds are updated nightly.
+Feeds are updated nightly, based on <a href="http://dblp.uni-trier.de/xml/">XML dumps provided by DBLP</a>.
+Caveat emptor: due to technical limitations, you will occasionally see false positives (i.e. not-so-recent papers) in the feeds.
+This is a free/libre open source software, inspired by the <a href="http://scholrev.org/">#ScholRev</a> movement.
 Source code (BSD 2-clause license) available <a href="https://github.com/CeON/DBLPfeeds">on GitHub</a>.
+</p>
+
+<p>
 I'm <strong>eager to hear your feedback</strong>, and please help spread the word:
 </p>
 
 <div class="socialbutton">
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://services.ceon.pl/dblpfeeds/" data-text="I follow the lastest papers from DBLP-indexed comp. sci. conferences and journals thanks to RSS feeds at" data-hashtags="dblpfeeds">Tweet</a>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://services.ceon.pl/dblpfeeds/" data-text="I follow the lastest papers from DBLP-indexed comp. sci. conferences and journals using RSS feeds at" data-hashtags="dblpfeeds">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 </div>
 
