@@ -152,11 +152,9 @@ def store(conn):
          (record['title'], authors, record['mdate'], record['ee'], record['venue'], record['year']))
 
 def parse_records(conn, fileName):
-   fromDate = datetime.datetime.now() - datetime.timedelta(1000)
 
    chain = store(conn)
    chain = filter_by_venue(chain)
-   chain = filter_by_date(fromDate, chain)
    chain = filter_incomplete(chain)
    chain = to_records(chain)
 
