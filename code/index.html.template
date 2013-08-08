@@ -76,6 +76,46 @@ I'm <strong>eager to hear your feedback</strong>, and please help spread the wor
 <p>Click on a conference or a journal below to subscribe to its RSS feed.
 Hint: use the find function of your browser (usually Ctrl-F or &#8984;-F) to locate the name you're looking for.</p>
 
+<p>If you simply want a package with the most popular journals and conferences from a certain domain,
+import one of the following OPML files to your RSS client:
+<a href="opml/AI.opml">AI</a>,
+<a href="opml/AR.opml">AR</a>,
+<a href="opml/CC.opml">CC</a>,
+<a href="opml/CG.opml">CG</a>,
+<a href="opml/CL.opml">CL</a>,
+<a href="opml/CR.opml">CR</a>,
+<a href="opml/CV.opml">CV</a>,
+<a href="opml/CY.opml">CY</a>,
+<a href="opml/DB.opml">DB</a>,
+<a href="opml/DC.opml">DC</a>,
+<a href="opml/DL.opml">DL</a>,
+<a href="opml/DM.opml">DM</a>,
+<a href="opml/DS.opml">DS</a>,
+<a href="opml/FL.opml">FL</a>,
+<a href="opml/GT.opml">GT</a>,
+<a href="opml/HC.opml">HC</a>,
+<a href="opml/IR.opml">IR</a>,
+<a href="opml/IT.opml">IT</a>,
+<a href="opml/LG.opml">LG</a>,
+<a href="opml/LO.opml">LO</a>,
+<a href="opml/MM.opml">MM</a>,
+<a href="opml/MS.opml">MS</a>,
+<a href="opml/NA.opml">NA</a>,
+<a href="opml/NE.opml">NE</a>,
+<a href="opml/NI.opml">NI</a>,
+<a href="opml/PF.opml">PF</a>,
+<a href="opml/PL.opml">PL</a>,
+<a href="opml/RO.opml">RO</a>,
+<a href="opml/SC.opml">SC</a>,
+<a href="opml/SE.opml">SE</a>,
+<a href="opml/SI.opml">SI</a>,
+<a href="opml/SY.opml">SY</a>.
+The labels correspond to <a href="http://arxiv.org/">arXiv</a> subject areas.
+See <a href="http://arxiv.org/corr/subjectclasses">this page</a> for detailed descriptions.
+Note: the packages were generated automatically.</p>
+
+<p>And now for the individual RSS feeds.</p>
+
 <!-- ######### -->
 
 <p class="clear"/>
