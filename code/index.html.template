@@ -112,7 +112,7 @@ import one of the following OPML files to your RSS client:
 <a href="opml/SY.opml">SY</a>.
 The labels correspond to <a href="http://arxiv.org/">arXiv</a> subject areas.
 See <a href="http://arxiv.org/corr/subjectclasses">this page</a> for detailed descriptions.
-Note: the packages were generated automatically.</p>
+Note: the packages were generated automatically (<a href="http://bolo1729.blogspot.com/2013/08/tagging-cs-journals-and-conferences.html">here's how</a>).</p>
 
 <p>And now for the individual RSS feeds.</p>
 
